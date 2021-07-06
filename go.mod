@@ -1,4 +1,4 @@
-module shining-force-tdd/m
+module shining-force-tdd
 
 go 1.16
 
