@@ -4,6 +4,9 @@ import (
 	"github.com/smwest87/shining-force-tdd/models"
 )
 
-func NewGame() models.Game {
-	return models.Game
+func NewGame(mapID int64) models.Game {
+	game := models.Game{
+		MapID: mapID,
+	}
+	return game
 }

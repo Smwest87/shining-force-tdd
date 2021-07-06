@@ -8,8 +8,10 @@ import (
 )
 
 func TestNewGame(t *testing.T) {
-	wantGame := models.Game{}
-	game := NewGame()
+	wantGame := models.Game{
+		MapID: 1234,
+	}
+	game := NewGame(1234)
 	assert.Equal(t, wantGame, game)
 
 }
