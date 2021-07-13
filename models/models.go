@@ -6,6 +6,19 @@ import (
 )
 
 type Game struct {
+	CharacterIDs []int64
+	MapID        int64
+	Paused       bool
+}
+
+func (g *Game) PauseGame() error {
+	if g.Paused == true {
+		errorMessage := fmt.Sprintf("game already paused: Game State: %v", g.Paused)
+		err := errors.New(errorMessage)
+		return err
+	}
+	g.Paused = true
+	return nil
 }
 
 type Player struct {
@@ -58,10 +71,16 @@ func (p *Player) Move(x int64, y int64, level Level) error {
 
 	for _, point := range level.OutOfBounds {
 		if checkCoordinate == point {
-			message := fmt.Sprintf("character cannot enter out of bounds.\nattempted coordinate: X: %d\n Y: %d\nout of bounds coordinate: X: %d\nY: %d", checkCoordinate.X, checkCoordinate.Y, point.X, point.Y)
+			message := fmt.Sprintf("character cannot enter out of bounds. attempted coordinate: X: %d Y: %d out of bounds coordinate: X: %d Y: %d", checkCoordinate.X, checkCoordinate.Y, point.X, point.Y)
 			err := errors.New(message)
 			return err
 		}
+	}
+
+	if x != 0 && y != 0 {
+		errMessage := fmt.Sprintf("player cannot move in a diagonal motion: xMove: %d yMove: %d", x, y)
+		err := errors.New(errMessage)
+		return err
 	}
 
 	p.X = p.X + x
